@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+  <gresource prefix="/nethogs_gui">
+	<file preprocess="xml-stripblanks">window.glade</file>
+    <file preprocess="xml-stripblanks">appmenu.ui</file>
+    <file preprocess="xml-stripblanks">headerbar.ui</file>
+	<file preprocess="xml-stripblanks">aboutdialog.glade</file>
+  </gresource>
+</gresources>

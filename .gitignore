@@ -1,0 +1,14 @@
+*~
+codelite
+Makefile
+config.log
+config.status
+*.gmo
+*.o
+stamp-h1
+autom4te.cache/
+autom4te.cache
+./autom4te.cache
+src/gnethogs
+po/stamp-po
+src/.deps/

@@ -1,0 +1,87 @@
+# French translations for gnethogs package
+# Traductions françaises du paquet gnethogs.
+# Copyright (C) 2016 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gnethogs package.
+# momo <mbfoss@fastmail.com>, 2016.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnethogs 0.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-03-08 23:24+0800\n"
+"PO-Revision-Date: 2016-03-08 08:32+0800\n"
+"Last-Translator: momo <mbfoss@fastmail.com>\n"
+"Language-Team: French\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#: src/MainWindow.cpp:108
+#, c-format
+msgid ""
+"Sent: %s | Received: %s | Outbound bandwidth: %s | Inbound bandwidth: %s"
+msgstr "Envoyé: %s | Reçu: %s | bande passante sortante: %s | bande passante entrante: %s"
+
+#: src/MainWindow.cpp:160
+msgid "Process name"
+msgstr "Nom du processus"
+
+#: src/MainWindow.cpp:161
+msgid "Device"
+msgstr "périphérique"
+
+#: src/MainWindow.cpp:162
+msgid "User"
+msgstr "Utilisateur"
+
+#: src/MainWindow.cpp:163
+msgid "Process ID"
+msgstr "ID du processus"
+
+#: src/MainWindow.cpp:164
+msgid "Sent"
+msgstr "Envoyés"
+
+#: src/MainWindow.cpp:165
+msgid "Received"
+msgstr "Reçus"
+
+#: src/MainWindow.cpp:166
+msgid "Inbound bandwidth"
+msgstr "bande passante entrante"
+
+#: src/MainWindow.cpp:167
+msgid "Outboud bandwidth"
+msgstr "bande passante sortante"
+
+#: src/MainWindow.cpp:191
+msgid "Failed to access network device(s)."
+msgstr "Impossible de démarrer la capture réseau."
+
+#: src/MainWindow.cpp:207
+#, fuzzy
+msgid "Per-application bandwidth usage statistics."
+msgstr "Utilisatin de la bande passante par application."
+
+#: src/MainWindow.cpp:209
+msgid ""
+"This program comes with ABSOLUTELY NO WARRANTY.\n"
+"See the GNU General Public License, version 2 or later for details."
+msgstr ""
+"Ce programme est fourni sans AUCUNE GARANTIE.\n"
+"Voir la GNU General Public License, version 2 ou ultérieure pour plus de "
+"détails."
+
+#: ui/appmenu.ui:7
+msgid "About"
+msgstr "À propos"
+
+#: ui/appmenu.ui:11
+msgid "Quit"
+msgstr "Quitter"
+
+#: ui/headerbar.ui:9
+msgid "NetHogs Network Monitor"
+msgstr "Moniteur réseau NetHogs"

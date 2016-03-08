@@ -1,0 +1,9 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Nethogs Network Monitor
+Exec=gnethogs
+Comment=Per-application bandwidth usage statistics
+Icon=gnethogs
+Terminal=false
+Categories=Utility;Viewer;GTK;
