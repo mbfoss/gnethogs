@@ -8,7 +8,7 @@ To install:
 * `git clone git@github.com:mb-gh/gnethogs.git`
 * `cd nethogs && git checkout build-as-lib && make && sudo make install`
 * `cd ../gnethogs && ./configure && make && sudo make install`
-* `sudo setcap cap_net_raw,cap_net_admin=eip /usr/local/bin/gnethogs`
+* `sudo setcap cap_net_raw /usr/local/bin/gnethogs`
 * Seach `nethogs` in your application menu!
 
 To uninstall:
