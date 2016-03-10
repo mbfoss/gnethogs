@@ -17,7 +17,7 @@ public:
 	Glib::RefPtr<Gtk::ListStore> createListStore()
 	{
 		Gtk::TreeModel::ColumnRecord column_record;
-		column_record.add(app_name);
+		column_record.add(name);
 		column_record.add(device_name);
 		column_record.add(uid);
 		column_record.add(pid);
@@ -25,7 +25,7 @@ public:
 		column_record.add(recv_bytes);
 		column_record.add(sent_kbs);
 		column_record.add(recv_kbs);
-		column_record.add(app_path);		
+		column_record.add(path);		
 		return Gtk::ListStore::create(column_record);
 	}
 	
@@ -69,7 +69,7 @@ public:
 		Gtk::TreeView::Column* pcolumn = 0;
 		int col = 0;
 				
-		tree_view->append_column(_("Process name"), 	  app_name);
+		tree_view->append_column(_("Name"), 	  		  name);
 		tree_view->append_column(_("Device"),      	      device_name);
 		tree_view->append_column(_("User"), 			  uid);
 		tree_view->append_column(_("Process ID"),   	  pid);
@@ -107,7 +107,7 @@ public:
 		}	
 	}
 		
-	Gtk::TreeModelColumn<Glib::ustring> app_name;
+	Gtk::TreeModelColumn<Glib::ustring> name;
 	Gtk::TreeModelColumn<Glib::ustring> device_name;
 	Gtk::TreeModelColumn<Glib::ustring> uid;
 	Gtk::TreeModelColumn<int32_t> 		pid;
@@ -115,7 +115,7 @@ public:
 	Gtk::TreeModelColumn<uint32_t> 		recv_bytes;
 	Gtk::TreeModelColumn<float>	 		sent_kbs;
 	Gtk::TreeModelColumn<float> 		recv_kbs;
-	Gtk::TreeModelColumn<Glib::ustring> app_path;
+	Gtk::TreeModelColumn<Glib::ustring> path;
 };
 
 #endif

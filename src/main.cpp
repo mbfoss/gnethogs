@@ -12,7 +12,7 @@ extern GResource *app_get_resource (void);
 int nethogs_monitor_status = NETHOGS_STATUS_OK;
 
 std::mutex row_updates_map_mutex;
-std::map<int, NethogsMonitorUpdate> row_updates_map;
+std::map<uint64_t, NethogsMonitorUpdate> row_updates_map;
 
 //ASYNC CALLBACK BY NETHOGS MONITOR
 static void onNethogsUpdate(NethogsMonitorUpdate const* update)
@@ -22,7 +22,7 @@ static void onNethogsUpdate(NethogsMonitorUpdate const* update)
 	{
 		//save the update for GUI use
 		std::lock_guard<std::mutex> lock(row_updates_map_mutex);
-		row_updates_map[update->pid] = *update;
+		row_updates_map[update->key] = *update;
 	}
 }
 

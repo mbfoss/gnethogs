@@ -6,7 +6,7 @@
 #include <iostream>
 #include <sstream>
 
-typedef std::map<int, NethogsMonitorUpdate> RowUpdatesMap;
+typedef std::map<uint64_t, NethogsMonitorUpdate> RowUpdatesMap;
 extern std::mutex row_updates_map_mutex;
 extern RowUpdatesMap row_updates_map;
 extern int nethogs_monitor_status;
@@ -73,8 +73,8 @@ bool MainWindow::onTimer()
 				it = m_rows_data.insert(it, std::make_pair(update.pid, RowData(ls_it)));
 				//set fixed fields
 				(*ls_it)[m_tree_data.pid ] = update.pid;
-				(*ls_it)[m_tree_data.app_name] = getFileName(update.app_name);
-				(*ls_it)[m_tree_data.app_path] = update.app_name;
+				(*ls_it)[m_tree_data.name] = getFileName(update.name);
+				(*ls_it)[m_tree_data.path] = update.name;
 			}
 			//updte other fields
 			(*ls_it)[m_tree_data.device_name] = update.device_name;
