@@ -101,7 +101,7 @@ am_gnethogs_OBJECTS = gnethogs-main.$(OBJEXT) \
 	gnethogs-MainWindow.$(OBJEXT) gresources.$(OBJEXT)
 gnethogs_OBJECTS = $(am_gnethogs_OBJECTS)
 am__DEPENDENCIES_1 =
-gnethogs_DEPENDENCIES = $(am__DEPENDENCIES_1)
+gnethogs_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 gnethogs_LINK = $(CXXLD) $(gnethogs_CXXFLAGS) $(CXXFLAGS) \
 	$(gnethogs_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
@@ -239,6 +239,7 @@ PKG_CONFIG = @PKG_CONFIG@
 PKG_CONFIG_LIBDIR = @PKG_CONFIG_LIBDIR@
 PKG_CONFIG_PATH = @PKG_CONFIG_PATH@
 POSUB = @POSUB@
+PTHREAD_LIBS = @PTHREAD_LIBS@
 SED = @SED@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
@@ -316,9 +317,9 @@ gnethogs_SOURCES = \
 	MainWindow.cpp \
 	gresources.c
 
-gnethogs_LDFLAGS = -lnethogs
+gnethogs_LDFLAGS = -lnethogs 
 gnethogs_CXXFLAGS = --std=c++11 
-gnethogs_LDADD = $(GNETHOGS_LIBS)
+gnethogs_LDADD = $(GNETHOGS_LIBS) $(PTHREAD_LIBS)
 ui_dir = ../ui/
 ui_gresource = ../ui/app.gresources.xml
 ui_deps = \

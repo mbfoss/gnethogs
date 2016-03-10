@@ -5,10 +5,11 @@
 #include "MainWindow.h"
 #include <gtkmm.h>
 #include <iostream>
+#include <thread>
 
 extern GResource *app_get_resource (void);
 
-int nethogs_monitor_status = 0;
+int nethogs_monitor_status = NETHOGS_STATUS_OK;
 
 std::mutex row_updates_map_mutex;
 std::map<int, NethogsMonitorUpdate> row_updates_map;
@@ -23,6 +24,11 @@ static void onNethogsUpdate(NethogsMonitorUpdate const* update)
 		std::lock_guard<std::mutex> lock(row_updates_map_mutex);
 		row_updates_map[update->pid] = *update;
 	}
+}
+
+static void nethogsMonitorThreadProc()
+{
+	nethogs_monitor_status = nethogsmonitor_loop(&onNethogsUpdate);
 }
 
 static void onAppStartup(Glib::RefPtr<Gtk::Application> & app)
@@ -44,8 +50,7 @@ int main(int argc, char* argv[])
     Glib::RefPtr<Gtk::Application> app = 
 		Gtk::Application::create(argc, argv, "io.github.mb-gh.nethogs_gui");
 
-	nethogsmonitor_register_callback(&onNethogsUpdate);
-	nethogs_monitor_status = nethogsmonitor_start();
+	std::thread nethogs_monitor_thread(&nethogsMonitorThreadProc);
 	 	 
 	MainWindow w;
 
@@ -53,7 +58,8 @@ int main(int argc, char* argv[])
 	
 	w.run(app);
 	
-	nethogsmonitor_stop();	
+	nethogsmonitor_breakloop();	
+	nethogs_monitor_thread.join();
 		
     return 0;
 }

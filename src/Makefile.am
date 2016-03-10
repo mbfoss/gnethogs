@@ -17,10 +17,10 @@ gnethogs_SOURCES =  \
 	MainWindow.cpp \
 	gresources.c
 
-gnethogs_LDFLAGS = -lnethogs
+gnethogs_LDFLAGS = -lnethogs 
 gnethogs_CXXFLAGS = --std=c++11 
 
-gnethogs_LDADD = $(GNETHOGS_LIBS)
+gnethogs_LDADD = $(GNETHOGS_LIBS) $(PTHREAD_LIBS)
 
 ui_dir = ../ui/
 ui_gresource = ../ui/app.gresources.xml
