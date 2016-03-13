@@ -30,6 +30,24 @@ public:
 	}
 	
 
+	static void pid_CellDataFun(Gtk::CellRenderer* renderer, 
+								const Gtk::TreeModel::iterator& iter, 
+								int model_column)
+	{
+		Gtk::CellRendererText* p_text_renderer = dynamic_cast<Gtk::CellRendererText*>(renderer);
+		if(iter)
+		{
+			//Get the value from the model.
+			Gtk::TreeModel::Row row = *iter;
+			int32_t value = 0;
+			row.get_value(model_column, value);
+			if( !value )
+			{
+				p_text_renderer->property_text() = "";
+			}
+		}
+	}
+	
 	static void byteCount_CellDataFun(Gtk::CellRenderer* renderer, 
 									  const Gtk::TreeModel::iterator& iter, 
 									  int model_column)
@@ -72,7 +90,12 @@ public:
 		tree_view->append_column(_("Name"), 	  		  name);
 		tree_view->append_column(_("Device"),      	      device_name);
 		tree_view->append_column(_("User"), 			  uid);
+		
 		tree_view->append_column(_("Process ID"),   	  pid);
+		col = tree_view->get_n_columns() - 1;
+		pcolumn = tree_view->get_column(col);
+		pcolumn->set_cell_data_func(*pcolumn->get_cells().at(0),
+			std::bind(&pid_CellDataFun, _1, _2, col));
 		
 		tree_view->append_column(_("Sent"), 			  sent_bytes);
 		col = tree_view->get_n_columns() - 1;

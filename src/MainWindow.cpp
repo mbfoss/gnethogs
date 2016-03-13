@@ -70,13 +70,19 @@ bool MainWindow::onTimer()
 				(*ls_it)[m_tree_data.name] = getFileName(update.record->name);
 				(*ls_it)[m_tree_data.path] = update.record->name;
 			}
+
 			//updte other fields
 			(*ls_it)[m_tree_data.device_name] = update.record->device_name;
-			(*ls_it)[m_tree_data.uid   	    ] = gtUserName(update.record->uid);
+			(*ls_it)[m_tree_data.uid   	    ] = update.record->pid?gtUserName(update.record->uid):"";
 			(*ls_it)[m_tree_data.sent_bytes ] = update.record->sent_bytes;
 			(*ls_it)[m_tree_data.recv_bytes ] = update.record->recv_bytes;
 			(*ls_it)[m_tree_data.sent_kbs   ] = update.record->sent_kbs;
 			(*ls_it)[m_tree_data.recv_kbs	] = update.record->recv_kbs;
+
+			//update total stats
+			m_total_data.sent_bytes += (update.record->sent_bytes - it->second.sent_bytes);
+			m_total_data.recv_bytes += (update.record->recv_bytes - it->second.recv_bytes);			
+
 			//save stat data
 			it->second.sent_bytes = update.record->sent_bytes;
 			it->second.recv_bytes = update.record->recv_bytes;
@@ -85,19 +91,18 @@ bool MainWindow::onTimer()
 		}
 	}
 
-	//update stats label
+	//update total stats
 	m_total_data.sent_kbs = 0;
 	m_total_data.recv_kbs = 0;
 	for(auto const& v : m_rows_data)
 	{
-		m_total_data.sent_bytes += v.second.sent_bytes;
-		m_total_data.recv_bytes += v.second.recv_bytes;
-		m_total_data.sent_kbs   += v.second.sent_kbs;
-		m_total_data.recv_kbs   += v.second.recv_kbs;
+		m_total_data.sent_kbs += v.second.sent_kbs;
+		m_total_data.recv_kbs += v.second.recv_kbs;
 	}
 	
+	//update stats label
 	char const* const format = 
-		(_( "Sent: %-15s | Received: %-15s | Outbound bandwidth: %-20s | Inbound bandwidth: %-20s" ));
+		(_( "Sent: %-15s|Received: %-15s|Outbound bandwidth: %-20s|Inbound bandwidth: %-20s"));
 
 	char buffer[300];
 	snprintf(buffer, sizeof(buffer), format, 
