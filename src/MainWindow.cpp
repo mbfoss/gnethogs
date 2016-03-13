@@ -34,7 +34,7 @@ bool MainWindow::onTimer()
 		char const* fail_msg = _("Failed to access network device(s).");
 		std::ostringstream oss;
 		oss << "<span foreground=\"red\">" << fail_msg << "</span>";
-		m_p_statuslabel->set_markup(oss.str());
+		m_p_label_sent_bytes->set_markup(oss.str());
 		
 		return false; //stops the timer
 	} 
@@ -100,19 +100,20 @@ bool MainWindow::onTimer()
 		m_total_data.recv_kbs += v.second.recv_kbs;
 	}
 	
-	//update stats label
-	char const* const format = 
-		(_( "Sent: %-15s|Received: %-15s|Outbound bandwidth: %-20s|Inbound bandwidth: %-20s"));
-
-	char buffer[300];
-	snprintf(buffer, sizeof(buffer), format, 
-		formatByteCount(m_total_data.sent_bytes).c_str(),
-		formatByteCount(m_total_data.recv_bytes).c_str(),
-		formatBandwidth(m_total_data.sent_kbs).c_str(),
-		formatBandwidth(m_total_data.recv_kbs).c_str());
-		
-	m_p_statuslabel->set_label(buffer);	
+	char buffer[30];
 	
+	snprintf(buffer, sizeof(buffer), "Sent: %s", formatByteCount(m_total_data.sent_bytes).c_str());
+	m_p_label_sent_bytes->set_label(buffer);
+	
+	snprintf(buffer, sizeof(buffer), "Received: %s", formatByteCount(m_total_data.recv_bytes).c_str());
+	m_p_label_recv_bytes->set_label(buffer);
+
+	snprintf(buffer, sizeof(buffer), "Outbound: %s", formatBandwidth(m_total_data.sent_kbs).c_str());
+	m_p_label_sent_kbs->set_label(buffer);
+
+	snprintf(buffer, sizeof(buffer), "Inbound: %s", formatBandwidth(m_total_data.recv_kbs).c_str());
+	m_p_label_recv_kbs->set_label(buffer);
+
 	return true;
 }
 
@@ -141,7 +142,11 @@ void MainWindow::run(Glib::RefPtr<Gtk::Application> app)
 	
 	//get widgets
 	m_p_gtkwindow = loadWiget<Gtk::ApplicationWindow>(builder, "main_window", &record);
-	m_p_statuslabel = loadWiget<Gtk::Label>(builder, "status_label", &record);
+	m_p_label_sent_bytes = loadWiget<Gtk::Label>(builder, "label_stat_sent", &record);
+	m_p_label_recv_bytes = loadWiget<Gtk::Label>(builder, "label_stat_recv", &record);
+	m_p_label_sent_kbs   = loadWiget<Gtk::Label>(builder, "label_stat_sent_bw", &record);
+	m_p_label_recv_kbs   = loadWiget<Gtk::Label>(builder, "label_stat_recv_bw", &record);
+	
 	Gtk::TreeView* tree_view = loadWiget<Gtk::TreeView>(builder, "treeview", &record);
 	Gtk::HeaderBar* pheaderbar = loadWiget<Gtk::HeaderBar>(builder, "headerbar", &record);
 		

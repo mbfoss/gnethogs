@@ -28,18 +28,9 @@ static inline std::string formatByteCount(double v, const char** orders, int nb_
 		order++;
 		v  = v/1024;
 	}
-	char buffer1[20];
-	int pos = snprintf(buffer1, sizeof(buffer1), "%.2lf", v);
-	for(--pos; pos > 0; --pos )
-	{
-		if(buffer1[pos] == '0' || buffer1[pos] == '.' )
-			buffer1[pos] = 0;
-		else
-			break;
-	}
-	char buffer2[30];
-	snprintf(buffer2, sizeof(buffer2), "%s %s", buffer1, orders[order]);
-	return buffer2;
+	char buffer1[30];
+	snprintf(buffer1, sizeof(buffer1), "%.2lf %s", v, orders[order]);
+	return buffer1;
 }
 
 static inline std::string formatByteCount(double v)
