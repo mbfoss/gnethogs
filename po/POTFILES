@@ -2,7 +2,9 @@
      ../src/MainWindow.cpp \
      ../src/MainWindow.h \
      ../src/Tools.h \
-     ../src/TreeModel.h \
+     ../src/TreeData.h \
+     ../src/PendingUpdates.cpp \
+     ../src/PendingUpdates.h \
      ../ui/window.glade \
      ../ui/aboutdialog.glade \
      ../ui/appmenu.ui \

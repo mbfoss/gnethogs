@@ -97,8 +97,9 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_gnethogs_OBJECTS = gnethogs-main.$(OBJEXT) \
-	gnethogs-MainWindow.$(OBJEXT) gresources.$(OBJEXT)
+am_gnethogs_OBJECTS = gnethogs-main.$(OBJEXT) gresources.$(OBJEXT) \
+	gnethogs-MainWindow.$(OBJEXT) \
+	gnethogs-PendingUpdates.$(OBJEXT)
 gnethogs_OBJECTS = $(am_gnethogs_OBJECTS)
 am__DEPENDENCIES_1 =
 gnethogs_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
@@ -189,6 +190,7 @@ CFLAGS = @CFLAGS@
 CPP = @CPP@
 CPPFLAGS = @CPPFLAGS@
 CXX = @CXX@
+CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
@@ -312,10 +314,13 @@ AM_CFLAGS = \
 
 gnethogs_SOURCES = \
 	main.cpp \
-	MainWindow.h \
+	gresources.c \
+	gettext.h \
 	TreeData.h \
 	MainWindow.cpp \
-	gresources.c
+	MainWindow.h \
+	PendingUpdates.cpp \
+	PendingUpdates.h
 
 gnethogs_LDFLAGS = -lnethogs 
 gnethogs_CXXFLAGS = --std=c++11 
@@ -416,6 +421,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gnethogs-MainWindow.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gnethogs-PendingUpdates.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gnethogs-main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/gresources.Po@am__quote@
 
@@ -474,6 +480,20 @@ gnethogs-MainWindow.obj: MainWindow.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='MainWindow.cpp' object='gnethogs-MainWindow.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gnethogs_CXXFLAGS) $(CXXFLAGS) -c -o gnethogs-MainWindow.obj `if test -f 'MainWindow.cpp'; then $(CYGPATH_W) 'MainWindow.cpp'; else $(CYGPATH_W) '$(srcdir)/MainWindow.cpp'; fi`
+
+gnethogs-PendingUpdates.o: PendingUpdates.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gnethogs_CXXFLAGS) $(CXXFLAGS) -MT gnethogs-PendingUpdates.o -MD -MP -MF $(DEPDIR)/gnethogs-PendingUpdates.Tpo -c -o gnethogs-PendingUpdates.o `test -f 'PendingUpdates.cpp' || echo '$(srcdir)/'`PendingUpdates.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/gnethogs-PendingUpdates.Tpo $(DEPDIR)/gnethogs-PendingUpdates.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='PendingUpdates.cpp' object='gnethogs-PendingUpdates.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gnethogs_CXXFLAGS) $(CXXFLAGS) -c -o gnethogs-PendingUpdates.o `test -f 'PendingUpdates.cpp' || echo '$(srcdir)/'`PendingUpdates.cpp
+
+gnethogs-PendingUpdates.obj: PendingUpdates.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gnethogs_CXXFLAGS) $(CXXFLAGS) -MT gnethogs-PendingUpdates.obj -MD -MP -MF $(DEPDIR)/gnethogs-PendingUpdates.Tpo -c -o gnethogs-PendingUpdates.obj `if test -f 'PendingUpdates.cpp'; then $(CYGPATH_W) 'PendingUpdates.cpp'; else $(CYGPATH_W) '$(srcdir)/PendingUpdates.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/gnethogs-PendingUpdates.Tpo $(DEPDIR)/gnethogs-PendingUpdates.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='PendingUpdates.cpp' object='gnethogs-PendingUpdates.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(gnethogs_CXXFLAGS) $(CXXFLAGS) -c -o gnethogs-PendingUpdates.obj `if test -f 'PendingUpdates.cpp'; then $(CYGPATH_W) 'PendingUpdates.cpp'; else $(CYGPATH_W) '$(srcdir)/PendingUpdates.cpp'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique

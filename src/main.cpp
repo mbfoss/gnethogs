@@ -1,34 +1,22 @@
-#include "../config.h"
-#include <libintl.h>
-#define _(String) gettext (String)
-
+#include "gettext.h"
 #include "MainWindow.h"
+#include "PendingUpdates.h"
 #include <gtkmm.h>
 #include <iostream>
 #include <thread>
 
 extern GResource *app_get_resource (void);
 
-int nethogs_monitor_status = NETHOGS_STATUS_OK;
-
-std::mutex row_updates_map_mutex;
-std::map<uint64_t, NethogsMonitorUpdate> row_updates_map;
-
-//ASYNC CALLBACK BY NETHOGS MONITOR
-static void onNethogsUpdate(NethogsMonitorUpdate const* update)
+//CALLBACK BY NETHOGS MONITOR
+static void onNethogsUpdate(int action, NethogsMonitorRecord const* update)
 {
-	if( update->action == NETHOGS_APP_ACTION_REMOVE ||
-		update->sent_bytes || update->recv_bytes )
-	{
-		//save the update for GUI use
-		std::lock_guard<std::mutex> lock(row_updates_map_mutex);
-		row_updates_map[update->key] = *update;
-	}
+	PendingUpdates::setRowUpdate(action, update);
 }
 
 static void nethogsMonitorThreadProc()
 {
-	nethogs_monitor_status = nethogsmonitor_loop(&onNethogsUpdate);
+	const int status = nethogsmonitor_loop(&onNethogsUpdate);
+	PendingUpdates::setNetHogsMonitorStatus(status);
 }
 
 static void onAppStartup(Glib::RefPtr<Gtk::Application> & app)

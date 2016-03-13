@@ -2,8 +2,8 @@
 #define MAINWINDOW_H
 
 #include "Tools.h"
-#include "libnethogs.h"
 #include "TreeData.h"
+#include "PendingUpdates.h"
 #include <vector>
 #include <gtkmm.h>
 #include <cassert>

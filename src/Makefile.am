@@ -12,10 +12,13 @@ bin_PROGRAMS = gnethogs
 
 gnethogs_SOURCES =  \
 	main.cpp \
-	MainWindow.h \
+	gresources.c \
+	gettext.h \
 	TreeData.h \
 	MainWindow.cpp \
-	gresources.c
+	MainWindow.h \
+	PendingUpdates.cpp \
+	PendingUpdates.h
 
 gnethogs_LDFLAGS = -lnethogs 
 gnethogs_CXXFLAGS = --std=c++11 

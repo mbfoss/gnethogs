@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnethogs 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-08 23:24+0800\n"
+"POT-Creation-Date: 2016-03-14 01:45+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,56 +17,57 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/MainWindow.cpp:108
-#, c-format
-msgid ""
-"Sent: %s | Received: %s | Outbound bandwidth: %s | Inbound bandwidth: %s"
-msgstr ""
-
-#: src/MainWindow.cpp:160
-msgid "Process name"
-msgstr ""
-
-#: src/MainWindow.cpp:161
-msgid "Device"
-msgstr ""
-
-#: src/MainWindow.cpp:162
-msgid "User"
-msgstr ""
-
-#: src/MainWindow.cpp:163
-msgid "Process ID"
-msgstr ""
-
-#: src/MainWindow.cpp:164
-msgid "Sent"
-msgstr ""
-
-#: src/MainWindow.cpp:165
-msgid "Received"
-msgstr ""
-
-#: src/MainWindow.cpp:166
-msgid "Inbound bandwidth"
-msgstr ""
-
-#: src/MainWindow.cpp:167
-msgid "Outboud bandwidth"
-msgstr ""
-
-#: src/MainWindow.cpp:191
+#: src/MainWindow.cpp:34
 msgid "Failed to access network device(s)."
 msgstr ""
 
-#: src/MainWindow.cpp:207
+#: src/MainWindow.cpp:100
+#, c-format
+msgid ""
+"Sent: %-15s | Received: %-15s | Outbound bandwidth: %-20s | Inbound "
+"bandwidth: %-20s"
+msgstr ""
+
+#: src/MainWindow.cpp:183
 msgid "Per-application bandwidth usage statistics."
 msgstr ""
 
-#: src/MainWindow.cpp:209
+#: src/MainWindow.cpp:185
 msgid ""
 "This program comes with ABSOLUTELY NO WARRANTY.\n"
 "See the GNU General Public License, version 2 or later for details."
+msgstr ""
+
+#: src/TreeData.h:72
+msgid "Name"
+msgstr ""
+
+#: src/TreeData.h:73
+msgid "Device"
+msgstr ""
+
+#: src/TreeData.h:74
+msgid "User"
+msgstr ""
+
+#: src/TreeData.h:75
+msgid "Process ID"
+msgstr ""
+
+#: src/TreeData.h:77
+msgid "Sent"
+msgstr ""
+
+#: src/TreeData.h:83
+msgid "Received"
+msgstr ""
+
+#: src/TreeData.h:89
+msgid "Outboud bandwidth"
+msgstr ""
+
+#: src/TreeData.h:95
+msgid "Inbound bandwidth"
 msgstr ""
 
 #: ui/appmenu.ui:7

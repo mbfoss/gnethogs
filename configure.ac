@@ -28,6 +28,17 @@ if test "x$PTHREAD_LIBS" = xerror; then
 fi
 AC_SUBST(PTHREAD_LIBS)
 
+#check for libnethogs
+
+AC_CHECK_LIB(nethogs, nethogsmonitor_loop, [], [
+   echo "Error! You need to have libnethogs-dev installed."
+   exit -1
+])
+
+AC_LANG_PUSH([C++])
+AC_CHECK_HEADERS([libnethogs.h])
+AC_LANG_POP
+
 
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.19.3])

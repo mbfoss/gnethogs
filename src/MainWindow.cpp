@@ -1,15 +1,8 @@
-#include "../config.h"
-#include <libintl.h>
-#define _(String) gettext (String)
-
+#include "gettext.h"
 #include "MainWindow.h"
+#include "PendingUpdates.h"
 #include <iostream>
 #include <sstream>
-
-typedef std::map<uint64_t, NethogsMonitorUpdate> RowUpdatesMap;
-extern std::mutex row_updates_map_mutex;
-extern RowUpdatesMap row_updates_map;
-extern int nethogs_monitor_status;
 
 template<typename T>
 static T*loadWiget(Glib::RefPtr<Gtk::Builder>& builder, 
@@ -36,28 +29,29 @@ MainWindow::~MainWindow()
 
 bool MainWindow::onTimer()
 {
-	std::lock_guard<std::mutex> lock(row_updates_map_mutex);
-
-	if( row_updates_map.empty() )
+	if( PendingUpdates::getNetHogsMonitorStatus() == NETHOGS_STATUS_FAILURE)
 	{
-		//no updates
-		return true;
-	}
-
-	for(RowUpdatesMap::value_type& v : row_updates_map)
-	{
-		NethogsMonitorUpdate const& update = v.second;
-				
-		//update row data map and list store
-		auto it = m_rows_data.lower_bound(update.pid);
-		bool const existing = (it != m_rows_data.end() && it->first == update.pid);
+		char const* fail_msg = _("Failed to access network device(s).");
+		std::ostringstream oss;
+		oss << "<span foreground=\"red\">" << fail_msg << "</span>";
+		m_p_statuslabel->set_markup(oss.str());
 		
-		if( v.second.action == NETHOGS_APP_ACTION_REMOVE )
+		return false; //stops the timer
+	} 
+	
+	PendingUpdates::Update update;
+	while(PendingUpdates::getRowUpdate(update))
+	{
+		//update row data map and list store
+		auto it = m_rows_data.lower_bound(update.record_id);
+		bool const existing = (it != m_rows_data.end() && it->first == update.record_id);
+		
+		if( update.action == NETHOGS_APP_ACTION_REMOVE )
 		{
 			if( existing )
 			{
 				m_list_store->erase(it->second.list_item_it);
-				m_rows_data.erase(update.pid);
+				m_rows_data.erase(update.record_id);
 			}
 		}
 		else
@@ -70,29 +64,26 @@ bool MainWindow::onTimer()
 			else
 			{ 
 				ls_it = m_list_store->append();
-				it = m_rows_data.insert(it, std::make_pair(update.pid, RowData(ls_it)));
+				it = m_rows_data.insert(it, std::make_pair(update.record_id, RowData(ls_it)));
 				//set fixed fields
-				(*ls_it)[m_tree_data.pid ] = update.pid;
-				(*ls_it)[m_tree_data.name] = getFileName(update.name);
-				(*ls_it)[m_tree_data.path] = update.name;
+				(*ls_it)[m_tree_data.pid ] = update.record->pid;
+				(*ls_it)[m_tree_data.name] = getFileName(update.record->name);
+				(*ls_it)[m_tree_data.path] = update.record->name;
 			}
 			//updte other fields
-			(*ls_it)[m_tree_data.device_name] = update.device_name;
-			(*ls_it)[m_tree_data.uid   	    ] = gtUserName(update.uid);
-			(*ls_it)[m_tree_data.sent_bytes ] = update.sent_bytes;
-			(*ls_it)[m_tree_data.recv_bytes ] = update.recv_bytes;
-			(*ls_it)[m_tree_data.sent_kbs   ] = update.sent_kbs;
-			(*ls_it)[m_tree_data.recv_kbs	] = update.recv_kbs;
+			(*ls_it)[m_tree_data.device_name] = update.record->device_name;
+			(*ls_it)[m_tree_data.uid   	    ] = gtUserName(update.record->uid);
+			(*ls_it)[m_tree_data.sent_bytes ] = update.record->sent_bytes;
+			(*ls_it)[m_tree_data.recv_bytes ] = update.record->recv_bytes;
+			(*ls_it)[m_tree_data.sent_kbs   ] = update.record->sent_kbs;
+			(*ls_it)[m_tree_data.recv_kbs	] = update.record->recv_kbs;
 			//save stat data
-			it->second.sent_bytes = update.sent_bytes;
-			it->second.recv_bytes = update.recv_bytes;
-			it->second.sent_kbs   = update.sent_kbs;
-			it->second.recv_kbs	  = update.recv_kbs;
+			it->second.sent_bytes = update.record->sent_bytes;
+			it->second.recv_bytes = update.record->recv_bytes;
+			it->second.sent_kbs   = update.record->sent_kbs;
+			it->second.recv_kbs	  = update.record->recv_kbs;
 		}
 	}
-
-	//these updates is not neede anymore
-	row_updates_map.clear();	
 
 	//update stats label
 	m_total_data.sent_kbs = 0;
@@ -105,8 +96,8 @@ bool MainWindow::onTimer()
 		m_total_data.recv_kbs   += v.second.recv_kbs;
 	}
 	
-	char const* const format
-		(_( "Sent: %s | Received: %s | Outbound bandwidth: %s | Inbound bandwidth: %s" ));
+	char const* const format = 
+		(_( "Sent: %-15s | Received: %-15s | Outbound bandwidth: %-20s | Inbound bandwidth: %-20s" ));
 
 	char buffer[300];
 	snprintf(buffer, sizeof(buffer), format, 
@@ -177,14 +168,7 @@ void MainWindow::run(Glib::RefPtr<Gtk::Application> app)
 }
 
 void MainWindow::onShow()
-{
-	if( nethogs_monitor_status == NETHOGS_STATUS_FAILURE)
-	{
-		char const* fail_msg =  _("Failed to access network device(s).");
-		std::ostringstream oss;
-		oss << "<span foreground=\"red\">" << fail_msg << "</span>";
-		m_p_statuslabel->set_markup(oss.str());
-	} 		
+{		
 }
 
 void MainWindow::onAction_About()
