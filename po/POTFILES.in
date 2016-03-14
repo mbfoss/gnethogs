@@ -8,6 +8,5 @@ src/TreeData.h
 src/PendingUpdates.cpp
 src/PendingUpdates.h
 ui/window.glade
-ui/aboutdialog.glade
 ui/appmenu.ui
 ui/headerbar.ui

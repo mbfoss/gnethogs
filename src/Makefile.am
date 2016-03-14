@@ -30,8 +30,7 @@ ui_gresource = ../ui/app.gresources.xml
 ui_deps = \
 	$(ui_dir)/appmenu.ui \
 	$(ui_dir)/headerbar.ui \
-	$(ui_dir)/window.glade \
-	$(ui_dir)/aboutdialog.glade
+	$(ui_dir)/window.glade
 
 gresources.c: $(ui_gresource) $(ui_deps)
 	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --generate-source --sourcedir=$(ui_dir) $(ui_gresource) --target=$@

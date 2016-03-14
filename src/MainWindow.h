@@ -10,6 +10,7 @@
 #include <mutex>
 #include <sys/types.h>
 #include <map>
+#include <memory>
 
 class MainWindow
 {
@@ -43,16 +44,16 @@ private:
 	void onAction_Quit();
 
 private:
-	Gtk::ApplicationWindow* 		m_p_gtkwindow;
-	Gtk::Label* 					m_p_label_sent_bytes;
-	Gtk::Label* 					m_p_label_recv_bytes;
-	Gtk::Label* 					m_p_label_sent_kbs;
-	Gtk::Label* 					m_p_label_recv_kbs;
-	Glib::RefPtr<Gtk::ListStore> 	m_list_store;
-	std::map<int, RowData> 			m_rows_data;
-	RowData							m_total_data;
-	TreeData 						m_tree_data;
-	sigc::connection 				m_timer_connection; 
+	std::shared_ptr<Gtk::ApplicationWindow> m_window;
+	std::shared_ptr<Gtk::Label> 			m_p_label_sent_bytes;
+	std::shared_ptr<Gtk::Label> 			m_p_label_recv_bytes;
+	std::shared_ptr<Gtk::Label> 			m_p_label_sent_kbs;
+	std::shared_ptr<Gtk::Label> 			m_p_label_recv_kbs;
+	Glib::RefPtr<Gtk::ListStore> 			m_list_store;
+	std::map<int, RowData> 					m_rows_data;
+	RowData									m_total_data;
+	TreeData 								m_tree_data;
+	sigc::connection 						m_timer_connection; 
 };
 
 #endif // MAINWINDOW_H

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnethogs 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-14 03:10+0800\n"
+"POT-Creation-Date: 2016-03-14 14:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: src/MainWindow.cpp:34
+#: src/MainWindow.cpp:31
 msgid "Failed to access network device(s)."
 msgstr ""
 
-#: src/MainWindow.cpp:193
+#: src/MainWindow.cpp:182
 msgid "Per-application bandwidth usage statistics."
 msgstr ""
 
-#: src/MainWindow.cpp:195
+#: src/MainWindow.cpp:184
 msgid ""
 "This program comes with ABSOLUTELY NO WARRANTY.\n"
 "See the GNU General Public License, version 2 or later for details."
@@ -56,11 +56,11 @@ msgid "Received"
 msgstr ""
 
 #: src/TreeData.h:112
-msgid "Outboud bandwidth"
+msgid "Outboud"
 msgstr ""
 
 #: src/TreeData.h:118
-msgid "Inbound bandwidth"
+msgid "Inbound"
 msgstr ""
 
 #: ui/appmenu.ui:7

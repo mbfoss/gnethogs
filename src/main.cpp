@@ -10,7 +10,7 @@ extern GResource *app_get_resource (void);
 //CALLBACK BY NETHOGS MONITOR
 static void onNethogsUpdate(int action, NethogsMonitorRecord const* update)
 {
-	PendingUpdates::setRowUpdate(action, update);
+	PendingUpdates::setRowUpdate(action, *update);
 }
 
 static void nethogsMonitorThreadProc()

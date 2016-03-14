@@ -13,11 +13,10 @@ public:
 	struct Update
 	{
 		int action;
-		int record_id;
-		NethogsMonitorRecord const* record;
+		NethogsMonitorRecord record;
 	};
 	
-	static void setRowUpdate(int action, NethogsMonitorRecord const* record);
+	static void setRowUpdate(int action, NethogsMonitorRecord const& record);
 	static void setNetHogsMonitorStatus(int status);
 
 	static int  getNetHogsMonitorStatus();

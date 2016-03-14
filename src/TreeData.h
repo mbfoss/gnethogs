@@ -109,13 +109,13 @@ public:
 		pcolumn->set_cell_data_func(*pcolumn->get_cells().at(0),
 			std::bind(&byteCount_CellDataFun, _1, _2, col));
 
-		tree_view->append_column(_("Outboud bandwidth"),  sent_kbs);
+		tree_view->append_column(_("Outboud"),  sent_kbs);
 		col = tree_view->get_n_columns() - 1;
 		pcolumn = tree_view->get_column(col);
 		pcolumn->set_cell_data_func(*pcolumn->get_cells().at(0),
 			std::bind(&bandwidth_CellDataFun, _1, _2, col));		
 		
-		tree_view->append_column(_("Inbound bandwidth"),  recv_kbs);
+		tree_view->append_column(_("Inbound"),  recv_kbs);
 		col = tree_view->get_n_columns() - 1;
 		pcolumn = tree_view->get_column(col);
 		pcolumn->set_cell_data_func(*pcolumn->get_cells().at(0),

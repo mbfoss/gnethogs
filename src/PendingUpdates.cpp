@@ -5,18 +5,17 @@ std::mutex PendingUpdates::m_mutex;
 PendingUpdates::RowUpdatesMap PendingUpdates::m_row_updates_map;
 int PendingUpdates::m_nethogs_monitor_status = NETHOGS_STATUS_OK;
 
-void PendingUpdates::setRowUpdate(int action, NethogsMonitorRecord const* record)
+void PendingUpdates::setRowUpdate(int action, NethogsMonitorRecord const& record)
 {
-	if( action == NETHOGS_APP_ACTION_REMOVE || record->sent_bytes || record->recv_bytes )
+	if( action == NETHOGS_APP_ACTION_REMOVE || record.sent_bytes || record.recv_bytes )
 	{
 		//save the update for GUI use
 		std::lock_guard<std::mutex> lock(m_mutex);
 		Update update;
 		memset(&update, 0, sizeof(update));
 		update.action = action;
-		update.record_id = record->record_id;
-		update.record = ((action == NETHOGS_APP_ACTION_REMOVE)? nullptr : record);
-		m_row_updates_map[record->record_id] = update;
+		update.record = record;
+		m_row_updates_map[record.record_id] = update;
 	}	
 }
 

@@ -4,22 +4,19 @@
 #include <iostream>
 #include <sstream>
 
+class RefPtr;
 template<typename T>
-static T*loadWiget(Glib::RefPtr<Gtk::Builder>& builder, 
-				   const char* name,
-				   std::vector<Gtk::Widget*>* record)
+static std::shared_ptr<T> 
+loadWiget(Glib::RefPtr<Gtk::Builder>& builder, const char* name)
 {
 	T* ptr = nullptr;
     builder->get_widget(name, ptr);
     assert(ptr);
-	if( record )
-		record->push_back(ptr);
-	return ptr;
+	return std::shared_ptr<T>(ptr);
 }
 
 
 MainWindow::MainWindow()
-: m_p_gtkwindow(nullptr)
 {
 }
 
@@ -43,15 +40,15 @@ bool MainWindow::onTimer()
 	while(PendingUpdates::getRowUpdate(update))
 	{
 		//update row data map and list store
-		auto it = m_rows_data.lower_bound(update.record_id);
-		bool const existing = (it != m_rows_data.end() && it->first == update.record_id);
+		auto it = m_rows_data.lower_bound(update.record.record_id);
+		bool const existing = (it != m_rows_data.end() && it->first == update.record.record_id);
 		
 		if( update.action == NETHOGS_APP_ACTION_REMOVE )
 		{
 			if( existing )
 			{
 				m_list_store->erase(it->second.list_item_it);
-				m_rows_data.erase(update.record_id);
+				m_rows_data.erase(update.record.record_id);
 			}
 		}
 		else
@@ -64,30 +61,30 @@ bool MainWindow::onTimer()
 			else
 			{ 
 				ls_it = m_list_store->append();
-				it = m_rows_data.insert(it, std::make_pair(update.record_id, RowData(ls_it)));
+				it = m_rows_data.insert(it, std::make_pair(update.record.record_id, RowData(ls_it)));
 				//set fixed fields
-				(*ls_it)[m_tree_data.pid ] = update.record->pid;
-				(*ls_it)[m_tree_data.name] = getFileName(update.record->name);
-				(*ls_it)[m_tree_data.path] = update.record->name;
+				(*ls_it)[m_tree_data.pid ] = update.record.pid;
+				(*ls_it)[m_tree_data.name] = getFileName(update.record.name);
+				(*ls_it)[m_tree_data.path] = update.record.name;
 			}
 
 			//updte other fields
-			(*ls_it)[m_tree_data.device_name] = update.record->device_name;
-			(*ls_it)[m_tree_data.uid   	    ] = update.record->pid?gtUserName(update.record->uid):"";
-			(*ls_it)[m_tree_data.sent_bytes ] = update.record->sent_bytes;
-			(*ls_it)[m_tree_data.recv_bytes ] = update.record->recv_bytes;
-			(*ls_it)[m_tree_data.sent_kbs   ] = update.record->sent_kbs;
-			(*ls_it)[m_tree_data.recv_kbs	] = update.record->recv_kbs;
+			(*ls_it)[m_tree_data.device_name] = update.record.device_name;
+			(*ls_it)[m_tree_data.uid   	    ] = update.record.pid?gtUserName(update.record.uid):"";
+			(*ls_it)[m_tree_data.sent_bytes ] = update.record.sent_bytes;
+			(*ls_it)[m_tree_data.recv_bytes ] = update.record.recv_bytes;
+			(*ls_it)[m_tree_data.sent_kbs   ] = update.record.sent_kbs;
+			(*ls_it)[m_tree_data.recv_kbs	] = update.record.recv_kbs;
 
 			//update total stats
-			m_total_data.sent_bytes += (update.record->sent_bytes - it->second.sent_bytes);
-			m_total_data.recv_bytes += (update.record->recv_bytes - it->second.recv_bytes);			
+			m_total_data.sent_bytes += (update.record.sent_bytes - it->second.sent_bytes);
+			m_total_data.recv_bytes += (update.record.recv_bytes - it->second.recv_bytes);			
 
 			//save stat data
-			it->second.sent_bytes = update.record->sent_bytes;
-			it->second.recv_bytes = update.record->recv_bytes;
-			it->second.sent_kbs   = update.record->sent_kbs;
-			it->second.recv_kbs	  = update.record->recv_kbs;
+			it->second.sent_bytes = update.record.sent_bytes;
+			it->second.recv_bytes = update.record.recv_bytes;
+			it->second.sent_kbs   = update.record.sent_kbs;
+			it->second.recv_kbs	  = update.record.recv_kbs;
 		}
 	}
 
@@ -133,7 +130,6 @@ bool MainWindow::onClosed(GdkEventAny*)
 
 void MainWindow::run(Glib::RefPtr<Gtk::Application> app)
 {   
-	std::vector<Gtk::Widget*> record;
     Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create();
 
 	builder->add_from_resource("/nethogs_gui/window.glade");
@@ -141,40 +137,34 @@ void MainWindow::run(Glib::RefPtr<Gtk::Application> app)
 	
 	
 	//get widgets
-	m_p_gtkwindow = loadWiget<Gtk::ApplicationWindow>(builder, "main_window", &record);
-	m_p_label_sent_bytes = loadWiget<Gtk::Label>(builder, "label_stat_sent", &record);
-	m_p_label_recv_bytes = loadWiget<Gtk::Label>(builder, "label_stat_recv", &record);
-	m_p_label_sent_kbs   = loadWiget<Gtk::Label>(builder, "label_stat_sent_bw", &record);
-	m_p_label_recv_kbs   = loadWiget<Gtk::Label>(builder, "label_stat_recv_bw", &record);
+	m_window = loadWiget<Gtk::ApplicationWindow>(builder, "main_window");
+	m_p_label_sent_bytes = loadWiget<Gtk::Label>(builder, "label_stat_sent");
+	m_p_label_recv_bytes = loadWiget<Gtk::Label>(builder, "label_stat_recv");
+	m_p_label_sent_kbs   = loadWiget<Gtk::Label>(builder, "label_stat_sent_bw");
+	m_p_label_recv_kbs   = loadWiget<Gtk::Label>(builder, "label_stat_recv_bw");
 	
-	Gtk::TreeView* tree_view = loadWiget<Gtk::TreeView>(builder, "treeview", &record);
-	Gtk::HeaderBar* pheaderbar = loadWiget<Gtk::HeaderBar>(builder, "headerbar", &record);
+	std::shared_ptr<Gtk::TreeView>  tree_view = loadWiget<Gtk::TreeView>(builder, "treeview");
+	std::shared_ptr<Gtk::HeaderBar> pheaderbar = loadWiget<Gtk::HeaderBar>(builder, "headerbar");
 		
 	//set title bar
-	m_p_gtkwindow->set_titlebar(*pheaderbar);
+	m_window->set_titlebar(*pheaderbar);
 		
 	//Create the Tree model
 	 m_list_store = m_tree_data.createListStore(); 
 	 assert(m_list_store);
 	tree_view->set_model(m_list_store);
-	m_tree_data.setTreeColumns(tree_view);
+	m_tree_data.setTreeColumns(tree_view.get());
 	
 	//Connect signals
-	m_p_gtkwindow->signal_realize().connect(std::bind(&MainWindow::onLoaded, this));
-	m_p_gtkwindow->signal_delete_event().connect(sigc::mem_fun(this,&MainWindow::onClosed));
-	m_p_gtkwindow->signal_show().connect(sigc::mem_fun(this,&MainWindow::onShow));
+	m_window->signal_realize().connect(std::bind(&MainWindow::onLoaded, this));
+	m_window->signal_delete_event().connect(sigc::mem_fun(this,&MainWindow::onClosed));
+	m_window->signal_show().connect(sigc::mem_fun(this,&MainWindow::onShow));
 	
 	//add actions
 	app->add_action("about", sigc::mem_fun(this,&MainWindow::onAction_About));
 	app->add_action("quit",  sigc::mem_fun(this,&MainWindow::onAction_Quit));
 		
-	app->run(*m_p_gtkwindow);
-	
-
-	for( Gtk::Widget* w : record )
-	{
-		delete w;
-	}
+	app->run(*m_window);
 }
 
 void MainWindow::onShow()
@@ -183,23 +173,20 @@ void MainWindow::onShow()
 
 void MainWindow::onAction_About()
 {
-	Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create();
-	builder->add_from_resource("/nethogs_gui/aboutdialog.glade");	
+	Gtk::AboutDialog dlg;
 
-	Gtk::AboutDialog* dlg = loadWiget<Gtk::AboutDialog>(builder, "aboutdialog", nullptr);
-
-	dlg->set_program_name(PACKAGE_NAME);
-	dlg->set_version(PACKAGE_VERSION);
-	dlg->set_comments(_("Per-application bandwidth usage statistics."));
-	dlg->set_authors({"<a href=\"mailto:mbfoss@fastmail.com\">Mohamed Boussaffa</a>"});
-	dlg->set_license(_("This program comes with ABSOLUTELY NO WARRANTY." "\n"
+	dlg.set_transient_for(*m_window);
+	dlg.set_program_name(PACKAGE_NAME);
+	dlg.set_version(PACKAGE_VERSION);
+	dlg.set_logo_icon_name("gnethogs"),
+	dlg.set_comments(_("Per-application bandwidth usage statistics."));
+	dlg.set_authors({"<a href=\"mailto:mbfoss@fastmail.com\">Mohamed Boussaffa</a>"});
+	dlg.set_license(_("This program comes with ABSOLUTELY NO WARRANTY." "\n"
 					 "See the GNU General Public License, version 2 or later for details."));
-	dlg->run();
-
-	delete dlg;
+	dlg.run();
 }
 
 void MainWindow::onAction_Quit()
 {
-	m_p_gtkwindow->close();
+	m_window->close();
 }
