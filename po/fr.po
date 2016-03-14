@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnethogs 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-14 14:40+0800\n"
+"POT-Creation-Date: 2016-03-14 14:57+0800\n"
 "PO-Revision-Date: 2016-03-08 08:32+0800\n"
 "Last-Translator: momo <mbfoss@fastmail.com>\n"
 "Language-Team: French\n"
@@ -22,19 +22,29 @@ msgstr ""
 msgid "Failed to access network device(s)."
 msgstr "Impossible de démarrer la capture réseau."
 
+#: src/MainWindow.cpp:102
+#, c-format
+msgid "Sent: %s"
+msgstr "Envoyés: %s"
+
+#: src/MainWindow.cpp:105
+#, c-format
+msgid "Received: %s"
+msgstr "Reçus: %s"
+
+#: src/MainWindow.cpp:108
+#, c-format
+msgid "Outbound: %s"
+msgstr "Sortant: %s"
+
+#: src/MainWindow.cpp:111
+#, c-format
+msgid "Inbound: %s"
+msgstr "Entrant: %s"
+
 #: src/MainWindow.cpp:182
-#, fuzzy
 msgid "Per-application bandwidth usage statistics."
 msgstr "Utilisatin de la bande passante par application."
-
-#: src/MainWindow.cpp:184
-msgid ""
-"This program comes with ABSOLUTELY NO WARRANTY.\n"
-"See the GNU General Public License, version 2 or later for details."
-msgstr ""
-"Ce programme est fourni sans AUCUNE GARANTIE.\n"
-"Voir la GNU General Public License, version 2 ou ultérieure pour plus de "
-"détails."
 
 #: src/TreeData.h:90
 msgid "Name"
@@ -62,11 +72,11 @@ msgstr "Reçus"
 
 #: src/TreeData.h:112
 msgid "Outboud"
-msgstr ""
+msgstr "Sortant"
 
 #: src/TreeData.h:118
 msgid "Inbound"
-msgstr ""
+msgstr "Entrant"
 
 #: ui/appmenu.ui:7
 msgid "About"
@@ -79,20 +89,3 @@ msgstr "Quitter"
 #: ui/headerbar.ui:9
 msgid "NetHogs Network Monitor"
 msgstr "Moniteur réseau NetHogs"
-
-#~ msgid "Outboud bandwidth"
-#~ msgstr "bande passante sortante"
-
-#~ msgid "Inbound bandwidth"
-#~ msgstr "bande passante entrante"
-
-#, fuzzy
-#~ msgid ""
-#~ "Sent: %-15s | Received: %-15s | Outbound bandwidth: %-20s | Inbound "
-#~ "bandwidth: %-20s"
-#~ msgstr ""
-#~ "Envoyé: %-15s | Reçu: %-15s | bande passante sortante: %-20s | bande "
-#~ "passante entrante: %-20s"
-
-#~ msgid "Process name"
-#~ msgstr "Nom du processus"

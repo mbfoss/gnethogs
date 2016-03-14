@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gnethogs 0.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-03-14 14:40+0800\n"
+"POT-Creation-Date: 2016-03-14 14:57+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,14 +21,28 @@ msgstr ""
 msgid "Failed to access network device(s)."
 msgstr ""
 
-#: src/MainWindow.cpp:182
-msgid "Per-application bandwidth usage statistics."
+#: src/MainWindow.cpp:102
+#, c-format
+msgid "Sent: %s"
 msgstr ""
 
-#: src/MainWindow.cpp:184
-msgid ""
-"This program comes with ABSOLUTELY NO WARRANTY.\n"
-"See the GNU General Public License, version 2 or later for details."
+#: src/MainWindow.cpp:105
+#, c-format
+msgid "Received: %s"
+msgstr ""
+
+#: src/MainWindow.cpp:108
+#, c-format
+msgid "Outbound: %s"
+msgstr ""
+
+#: src/MainWindow.cpp:111
+#, c-format
+msgid "Inbound: %s"
+msgstr ""
+
+#: src/MainWindow.cpp:182
+msgid "Per-application bandwidth usage statistics."
 msgstr ""
 
 #: src/TreeData.h:90
