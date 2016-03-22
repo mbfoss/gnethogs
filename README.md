@@ -5,8 +5,8 @@ Project Status: [__Beta__](https://en.wikipedia.org/wiki/Software_release_life_c
 To build form source and install:
 * remove nethogs if you have it installed
 * install dependencies:
-  * Debian/Ubuntu: `apt-get install build-essential libncurses5-dev libpcap-dev`
-  * Yum-based distros: `yum install gcc-c++ libpcap-devel.x86_64 libpcap.x86_64 ncurses*`
+  * Debian/Ubuntu: `apt-get install build-essential libncurses5-dev libpcap-dev libgtkmm-3.0-dev`
+  * Yum-based distros: `yum install gcc-c++ libpcap-devel.x86_64 libpcap.x86_64 ncurses* gtkmm30-docs`
 * `cd ~`
 * `git clone git@github.com:mb-gh/nethogs.git`
 * `git clone git@github.com:mb-gh/gnethogs.git`
