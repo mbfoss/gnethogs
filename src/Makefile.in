@@ -102,9 +102,9 @@ am_gnethogs_OBJECTS = gnethogs-main.$(OBJEXT) gresources.$(OBJEXT) \
 	gnethogs-PendingUpdates.$(OBJEXT)
 gnethogs_OBJECTS = $(am_gnethogs_OBJECTS)
 am__DEPENDENCIES_1 =
-gnethogs_DEPENDENCIES = $(am__DEPENDENCIES_1)
+gnethogs_DEPENDENCIES = $(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 gnethogs_LINK = $(CXXLD) $(gnethogs_CXXFLAGS) $(CXXFLAGS) \
-	$(AM_LDFLAGS) $(LDFLAGS) -o $@
+	$(gnethogs_LDFLAGS) $(LDFLAGS) -o $@
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
 am__v_P_0 = false
@@ -322,8 +322,9 @@ gnethogs_SOURCES = \
 	PendingUpdates.cpp \
 	PendingUpdates.h
 
+gnethogs_LDFLAGS = -lnethogs 
 gnethogs_CXXFLAGS = --std=c++11 
-gnethogs_LDADD = $(PTHREAD_LIBS)
+gnethogs_LDADD = $(GNETHOGS_LIBS) $(PTHREAD_LIBS)
 ui_dir = ../ui/
 ui_gresource = ../ui/app.gresources.xml
 ui_deps = \
