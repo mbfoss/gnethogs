@@ -1,16 +1,20 @@
 This is a desktop graphical application for [nethogs](https://github.com/raboof/nethogs).    
-This project is in *early* stage and will conflict an existing installation of nethogs (waiting for pull-request to be processed)   
 Screenshot: http://imgur.com/6AhsPzH   
+Project Status: [__Beta__](https://en.wikipedia.org/wiki/Software_release_life_cycle#Beta) (reviews and bug reports are welcome)
 
-To install:
+To build form source and install:
 * remove nethogs if you have it installed
+* install dependencies:
+  * Debian/Ubuntu: `apt-get install build-essential libncurses5-dev libpcap-dev libgtkmm-3.0-dev`
+  * Yum-based distros: `yum install gcc-c++ libpcap-devel.x86_64 libpcap.x86_64 ncurses* gtkmm30-docs`
+* `cd ~`
 * `git clone git@github.com:mb-gh/nethogs.git`
 * `git clone git@github.com:mb-gh/gnethogs.git`
-* `cd nethogs && git checkout build-as-lib && make && sudo make install_dev`
-* `cd ../gnethogs && ./configure && make && sudo make install`
-* `sudo setcap cap_net_raw /usr/local/bin/gnethogs`
-* Seach `nethogs` in your application menu!
+* `cd ~/nethogs && make && sudo make install_dev`
+* `cd ~/gnethogs && ./configure && make && sudo make install`
+* `sudo setcap cap_net_raw /usr/local/bin/gnethogs` (To be able to run it as non-root user)
+* Seach `nethogs` in your application/activity menu!
 
 To uninstall:
-* `cd nethogs && sudo make uninstall`
-* `cd ../gnethogs && sudo make uninstall`
+* `cd ~/nethogs && sudo make uninstall`
+* `cd ~/gnethogs && sudo make uninstall`
