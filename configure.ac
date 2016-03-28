@@ -2,7 +2,7 @@ AC_INIT([gnethogs],[0.1])
 
 AC_CONFIG_HEADERS([config.h])
 
-AM_INIT_AUTOMAKE([1.11])
+AM_INIT_AUTOMAKE([1.14])
 
 AM_SILENT_RULES([yes])
 

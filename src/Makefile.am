@@ -20,10 +20,9 @@ gnethogs_SOURCES =  \
 	PendingUpdates.cpp \
 	PendingUpdates.h
 
-gnethogs_LDFLAGS = -lnethogs 
 gnethogs_CXXFLAGS = --std=c++11 
 
-gnethogs_LDADD = $(GNETHOGS_LIBS) $(PTHREAD_LIBS)
+gnethogs_LDADD = $(PTHREAD_LIBS)
 
 ui_dir = ../ui/
 ui_gresource = ../ui/app.gresources.xml
