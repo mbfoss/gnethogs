@@ -1,7 +1,10 @@
 This is a desktop graphical application for [nethogs](https://github.com/raboof/nethogs).    
-Screenshot: http://imgur.com/6AhsPzH   
 Project Status: [__Beta__](https://en.wikipedia.org/wiki/Software_release_life_cycle#Beta) (reviews and bug reports are welcome)
 
+##Screenshot
+![Screenshot](https://cloud.githubusercontent.com/assets/6733770/16925237/a1363dd0-4cf9-11e6-81aa-83a52e72c549.png)
+
+##Installation
 To build form source and install:
 * remove nethogs if you have it installed
 * install dependencies:
