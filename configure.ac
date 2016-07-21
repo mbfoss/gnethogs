@@ -1,4 +1,4 @@
-AC_INIT([gnethogs],[0.1])
+_INIT([gnethogs],[0.1])
 
 AC_CONFIG_HEADERS([config.h])
 
@@ -51,3 +51,4 @@ data/icons/Makefile
 po/Makefile.in 
 ])
 AC_OUTPUT
+
