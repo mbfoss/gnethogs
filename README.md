@@ -14,11 +14,7 @@ To build form source and install:
 * `git clone git@github.com:mb-gh/nethogs.git`
 * `git clone git@github.com:mb-gh/gnethogs.git`
 * `cd ~/nethogs && make && sudo make install_dev`
-<<<<<<< HEAD
 * `cd ~/gnethogs && ./autogen.sh && ./configure && make && sudo make install`
-=======
-* `cd ~/gnethogs && autogen.sh && ./configure && make && sudo make install`
->>>>>>> 5712b33aa70a7743260dc20d92428a2e21ab5b1b
 * `sudo setcap cap_net_raw /usr/local/bin/gnethogs` (To be able to run it as non-root user)
 * Seach `nethogs` in your application/activity menu!
 
