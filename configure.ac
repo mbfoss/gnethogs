@@ -1,4 +1,4 @@
-_INIT([gnethogs],[0.1])
+AC_INIT([gnethogs],[0.1])
 
 AC_CONFIG_HEADERS([config.h])
 
@@ -39,7 +39,7 @@ AC_LANG_PUSH([C++])
 AC_CHECK_HEADERS([libnethogs.h])
 AC_LANG_POP
 
-
+IT_PROG_INTLTOOL([0.35.0]) # Intltool
 AM_GNU_GETTEXT([external])
 AM_GNU_GETTEXT_VERSION([0.19.3])
 

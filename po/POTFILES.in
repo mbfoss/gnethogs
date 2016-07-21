@@ -1,0 +1,13 @@
+# List of source files which contain translatable strings.
+
+src/main.cpp
+src/MainWindow.cpp
+src/MainWindow.h
+src/Tools.h
+src/TreeData.h
+src/PendingUpdates.cpp
+src/PendingUpdates.h
+ui/window.glade
+ui/appmenu.ui
+ui/headerbar.ui
+
