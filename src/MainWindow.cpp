@@ -3,6 +3,7 @@
 #include "PendingUpdates.h"
 #include <iostream>
 #include <sstream>
+#include <gio/gio.h>
 
 class RefPtr;
 template<typename T>
@@ -37,19 +38,21 @@ bool MainWindow::onTimer()
 	} 
 	
 	PendingUpdates::Update update;
+	
 	while(PendingUpdates::getRowUpdate(update))
 	{
 		//update row data map and list store
+		std::cout << "name" << update.record.name << " pid:" << update.record.pid << "\n";
 		auto it = m_rows_data.lower_bound(update.record.record_id);
 		bool const existing = (it != m_rows_data.end() && it->first == update.record.record_id);
 		
 		if( update.action == NETHOGS_APP_ACTION_REMOVE )
 		{
-			if( existing )
+			/*if( existing )
 			{
 				m_list_store->erase(it->second.list_item_it);
 				m_rows_data.erase(update.record.record_id);
-			}
+			}*/
 		}
 		else
 		{
@@ -64,11 +67,13 @@ bool MainWindow::onTimer()
 				it = m_rows_data.insert(it, std::make_pair(update.record.record_id, RowData(ls_it)));
 				//set fixed fields
 				(*ls_it)[m_tree_data.pid ] = update.record.pid;
+				std::cout << "***********PID********" << (*ls_it)[m_tree_data.pid ] << "\n";
 				(*ls_it)[m_tree_data.name] = getFileName(update.record.name);
 				(*ls_it)[m_tree_data.path] = update.record.name;
+				(*ls_it)[m_tree_data.icon] = Glib::wrap(gtk_icon_theme_load_icon (gtk_icon_theme_get_default (), getFileName(update.record.name).c_str(), 16, (GtkIconLookupFlags)(GTK_ICON_LOOKUP_USE_BUILTIN | GTK_ICON_LOOKUP_FORCE_SIZE), NULL));
 			}
 
-			//updte other fields
+			//update other fields
 			(*ls_it)[m_tree_data.device_name] = update.record.device_name;
 			(*ls_it)[m_tree_data.uid   	    ] = update.record.pid?gtUserName(update.record.uid):"";
 			(*ls_it)[m_tree_data.sent_bytes ] = update.record.sent_bytes;
