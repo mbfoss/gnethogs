@@ -4,6 +4,7 @@
 #include <gtkmm.h>
 #include <list>
 #include "Tools.h"
+#include <gtk/gtk.h>
 
 //Tree model columns
 class TreeData
@@ -21,14 +22,15 @@ public:
 		column_record.add(device_name);
 		column_record.add(uid);
 		column_record.add(pid);
+		column_record.add(icon);
 		column_record.add(sent_bytes);
 		column_record.add(recv_bytes);
 		column_record.add(sent_kbs);
 		column_record.add(recv_kbs);
-		column_record.add(path);		
+		column_record.add(path);
+		column_record.add(icon)	;	
 		return Gtk::ListStore::create(column_record);
 	}
-	
 
 	static void pid_CellDataFun(Gtk::CellRenderer* renderer, 
 								const Gtk::TreeModel::iterator& iter, 
@@ -86,16 +88,22 @@ public:
 		
 		Gtk::TreeView::Column* pcolumn = 0;
 		int col = 0;
-				
+
+		tree_view->append_column(_("Icon"), icon);	
+		/*col = tree_view->get_n_columns() - 1;
+		pcolumn = tree_view->get_column(col);
+		pcolumn->set_cell_data_func(*pcolumn->get_cells().at(0),
+			std::bind(&icon_CellDataFun, _1, _2, col));*/
+
 		tree_view->append_column(_("Name"), name);
 		tree_view->append_column(_("Device"), device_name);
 		tree_view->append_column(_("User"), uid);
 		
 		tree_view->append_column(_("Process ID"), pid);
-		col = tree_view->get_n_columns() - 1;
+		/*col = tree_view->get_n_columns() - 1;
 		pcolumn = tree_view->get_column(col);
 		pcolumn->set_cell_data_func(*pcolumn->get_cells().at(0),
-			std::bind(&pid_CellDataFun, _1, _2, col));
+			std::bind(&pid_CellDataFun, _1, _2, col));*/
 		
 		tree_view->append_column(_("Sent"), sent_bytes);
 		col = tree_view->get_n_columns() - 1;
@@ -123,6 +131,8 @@ public:
 				
 		tree_view->set_tooltip_column(tree_view->get_n_columns() );
 
+		tree_view->append_column(_("Path"), path);
+
 		for(int pos = 0; pos < tree_view->get_n_columns(); ++pos)
 		{
 			Gtk::TreeView::Column* pcolumn = tree_view->get_column(pos);
@@ -139,6 +149,8 @@ public:
 	Gtk::TreeModelColumn<float>	 		sent_kbs;
 	Gtk::TreeModelColumn<float> 		recv_kbs;
 	Gtk::TreeModelColumn<Glib::ustring> path;
+	Gtk::TreeModelColumn<Glib::RefPtr<Gdk::Pixbuf> > icon;
+	//GtkWidget *image;
 };
 
 #endif
