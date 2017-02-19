@@ -137,9 +137,20 @@ void MainWindow::run(Glib::RefPtr<Gtk::Application> app)
 {   
     Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create();
 
-	builder->add_from_resource("/nethogs_gui/window.glade");
-	builder->add_from_resource("/nethogs_gui/headerbar.ui");
-	
+	try{
+ 	   builder->add_from_resource("/nethogs_gui/window.glade");
+	}
+	catch(Gtk::BuilderError const& e){
+		std::cout << e.what() << std::endl;
+		return;
+	}
+	try{
+		builder->add_from_resource("/nethogs_gui/headerbar.ui");
+	}
+	catch(Gtk::BuilderError const& e){
+		std::cout << e.what() << std::endl;
+		return;
+	}
 	
 	//get widgets
 	m_window = loadWiget<Gtk::ApplicationWindow>(builder, "main_window");

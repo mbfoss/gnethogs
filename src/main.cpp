@@ -29,7 +29,9 @@ static void onAppStartup(Glib::RefPtr<Gtk::Application> & app)
 }
 
 int main(int argc, char* argv[])
-{	
+{
+   Gtk::Main kit(argc, argv);
+	
     setlocale (LC_ALL, "");
     textdomain (PACKAGE);
 	bindtextdomain (PACKAGE, PACKAGE_LOCALE_DIR);
