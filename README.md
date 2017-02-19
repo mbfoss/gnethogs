@@ -11,7 +11,7 @@ To build form source and install:
   * Debian/Ubuntu: `apt-get install build-essential libncurses5-dev libpcap-dev libgtkmm-3.0-dev`
   * Yum-based distros: `yum install gcc-c++ libpcap-devel.x86_64 libpcap.x86_64 ncurses* gtkmm30-docs`
 * `cd ~`
-* `git clone https://github.com/raboof/nethogs.git`
+* `git clone https://github.com/mbfoss/nethogs.git`
 * `git clone https://github.com/mbfoss/gnethogs.git`
 * `cd ~/nethogs && make && sudo make install_dev`
 * `cd ~/gnethogs && ./autogen.sh && ./configure && make && sudo make install`
