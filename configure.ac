@@ -40,6 +40,7 @@ AC_CHECK_HEADERS([libnethogs.h])
 AC_LANG_POP
 
 IT_PROG_INTLTOOL([0.35.0]) # Intltool
+AM_GNU_GETTEXT([external])
 
 AC_CONFIG_FILES([ 
 Makefile
