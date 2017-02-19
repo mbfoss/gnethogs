@@ -15,7 +15,7 @@ To build form source and install:
 * `git clone https://github.com/mbfoss/gnethogs.git`
 * `cd ~/nethogs && make libnethogs && sudo make install_dev`
 * `cd ~/gnethogs && ./autogen.sh && ./configure && make && sudo make install`
-* `sudo setcap cap_net_raw /usr/local/bin/gnethogs` (To be able to run it as non-root user)
+* `sudo setcap cap_net_raw+ep /usr/local/bin/gnethogs` (To be able to run it as non-root user)
 * Seach `nethogs` in your application/activity menu!
 
 To uninstall:
