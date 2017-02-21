@@ -6,7 +6,6 @@ Gnethogs uses libnethogs which is built from source by following the instruction
 
 ##Installation
 To build form source and install:
-* remove nethogs if you have it installed
 * install dependencies:
   * Debian/Ubuntu: `apt-get install build-essential libncurses5-dev libpcap-dev libgtkmm-3.0-dev autoconf autopoint intltool libxml2-utils`
   * Yum-based distros: `yum install gcc-c++ libpcap-devel.x86_64 libpcap.x86_64 ncurses* gtkmm30-docs autoconf autopoint intltool libxml2-utils`
