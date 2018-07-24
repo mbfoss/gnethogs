@@ -1,10 +1,12 @@
 This is a desktop graphical application for [nethogs](https://github.com/raboof/nethogs).    
 Gnethogs uses libnethogs which is built from source by following the instructions below.
 
-##Screenshot
+## Screenshot
+
 ![Screenshot](https://cloud.githubusercontent.com/assets/6733770/16925237/a1363dd0-4cf9-11e6-81aa-83a52e72c549.png)
 
-##Installation
+## Installation
+
 To build form source and install:
 * install dependencies:
   * Debian/Ubuntu: `apt-get install build-essential libncurses5-dev libpcap-dev libgtkmm-3.0-dev autoconf autopoint intltool libxml2-utils`
@@ -20,4 +22,3 @@ To build form source and install:
 To uninstall:
 * `cd ~/nethogs && sudo make uninstall`
 * `cd ~/gnethogs && sudo make uninstall`
-
