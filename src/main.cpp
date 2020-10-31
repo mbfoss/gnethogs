@@ -15,7 +15,7 @@ static void onNethogsUpdate(int action, NethogsMonitorRecord const* update)
 
 static void nethogsMonitorThreadProc()
 {
-	const int status = nethogsmonitor_loop(&onNethogsUpdate);
+	const int status = nethogsmonitor_loop(&onNethogsUpdate, NULL, 1000);
 	PendingUpdates::setNetHogsMonitorStatus(status);
 }
 

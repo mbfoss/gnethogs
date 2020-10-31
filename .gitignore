@@ -43,3 +43,5 @@ po/quot.sed
 po/remove-potcdate.sin
 po/stamp-it
 src/Makefile.in
+mkinstalldirs
+src/gresources.c
